@@ -3,10 +3,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { fireStore } from "../firebase/firebase";
 
 const Context = createContext(null);
-export const ItemsContext = ()=> useContext(Context) //customHook
+export const useItem = ()=> useContext(Context) //customHook
 
 export  const ItemsContextProvider = ({children})=>{
-    const [items,setItems] = useState(null);
+    const [items,setItems] = useState([]);
 
     useEffect(()=>{
         const fetchItemsFromFireStore = async ()=>{
@@ -32,13 +32,11 @@ export  const ItemsContextProvider = ({children})=>{
     },[]);
 
     return(
-        <>
-
 
         <Context.Provider  value={{items, setItems}}>
             {children}
         </Context.Provider>
         
-        </>
+
     )
 }

@@ -1,9 +1,10 @@
 import Navbar from "../navbar/Navbar"
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import {  ItemsContext } from '../context/Item';
+import { useItem } from "../context/Item";
 import Login from "../modal/Login";
 import Sell from "../modal/Sell";
+import Footer from "../footer/Footer";
 
 
 const Details = () => {
@@ -12,7 +13,7 @@ const Details = () => {
 
   const [openModal, setModal] = useState(false);
   const [openModalSell, setModalSell] = useState(false);
-  const itemsCtx= ItemsContext();
+  const itemsCtx= useItem();
 
   const toggleModal = () => setModal(!openModal);
   const toggleModalSell = () => setModalSell(!openModalSell);
@@ -30,8 +31,8 @@ const Details = () => {
               <div className="flex flex-col relative w-full">
            
                   <p className="p-1 pl-0 text-2xl font-bold">₹ {item?.price}</p>
-                  <p className="p-1 pl-0 text-base">{item?.category}</p>
                   <p className="p-1 pl-0 text-xl font-bold">{item?.title}</p>
+                  <p className="p-1 pl-0 text-base">{item?.category}</p>
                   <p className="p-1 pl-0 sm:pb-0 break-words text-ellipsis overflow-hidden w-full">
                       {item?.description}
                   </p>
@@ -43,6 +44,7 @@ const Details = () => {
           </div>
 
           <Sell setItems={(itemsCtx ).setItems} toggleModal={toggleModalSell} status={openModalSell} />
+          <Footer />
       </div>
   );
 };

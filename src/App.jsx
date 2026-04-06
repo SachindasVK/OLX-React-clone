@@ -1,16 +1,25 @@
-import { Route, Routes } from 'react-router-dom'
-import Home from './components/pages/Home'
-import Details from './components/pages/Details'
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import React, { Suspense } from "react";
+
+const Home = React.lazy(()=>import('./components/pages/Home'))
+const Details = React.lazy(()=>import('./components/pages/Details'))
+
 
 const App = () => {
   return (
-   <>
-   <Routes>
-    <Route  path='/' element={<Home/>}/>
-    <Route  path='/details' element={<Details/>}/>
-   </Routes>
-   </>
-  )
-}
+    <>
+      <ToastContainer position="top-right" autoClose={2000} />
 
-export default App
+      <Suspense fallback={<div className="p-5">Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/details" element={<Details />} />
+        </Routes>
+      </Suspense>
+    </>
+  );
+};
+
+export default App;

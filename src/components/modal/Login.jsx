@@ -7,19 +7,23 @@ import avatar from "../../assets/avatar.png";
 import close from "../../assets/close.svg";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "../firebase/firebase";
+import { toast } from "react-toastify";
 
 const Login = ({ toggleModal, status }) => {
+  const handleClick = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+      toast.success(
+        `Welcome ${result.user.displayName?.split(" ")[0] || "User"}`,
+      );
 
-    const handleClick = async() => {
-        try {
-          const result =  await signInWithPopup(auth,provider)
-          console.log(result)
-        } catch (error) {
-            console.log(error)
-        }
+      toggleModal();
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message.split("Firebase:")[1] || "Login failed ❌");
     }
-
-
+  };
 
   return (
     <div>
@@ -114,9 +118,14 @@ const Login = ({ toggleModal, status }) => {
           <div className="p-6 pt-0">
             <div className="flex items-center justify-start rounded-md border-2 border-solid border-black p-5 pl-4 relative h-8 mb-4">
               <img className="w-6 mr-2" src={mobile} alt="" />
-              <p className="text-sm font-bold cursor-pointer">Continue with phone</p>
+              <p className="text-sm font-bold cursor-pointer">
+                Continue with phone
+              </p>
             </div>
-            <div className="flex items-center justify-center rounded-md border-2 border-solid border-gray-300 p-5 relative h-8 cursor-pointer active:bg-teal-100" onClick={handleClick}>
+            <div
+              className="flex items-center justify-center rounded-md border-2 border-solid border-gray-300 p-5 relative h-8 cursor-pointer active:bg-teal-100"
+              onClick={handleClick}
+            >
               <img className="w-7 absolute left-2" src={google} alt="" />
               <p className="text-sm text-gray-500">Continue with Google</p>
             </div>

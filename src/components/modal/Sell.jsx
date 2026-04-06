@@ -7,6 +7,7 @@ import { fetchFromFirestore, fireStore } from "../firebase/firebase"
 import fileUpload from '../../assets/fileUpload.svg'
 import loading from '../../assets/loading.gif'
 import close from '../../assets/close.svg'
+import { toast } from "react-toastify";
 
 
 
@@ -27,83 +28,95 @@ const Sell = (props) => {
         if(event.target.files) setImage(event.target.files[0])
     }
     
-    const handleSubmit = async (event)=>{
-        event.preventDefault();
+    const handleSubmit = async (event) => {
+  event.preventDefault();
 
-        if(!auth?.user){
-            alert('Please login to continue');
-            return;
-        }
+  if (!auth?.user) {
+    toast.error("Please login to continue");
+    return;
+  }
 
-        setSubmitting(true)
+  const trimmedTitle = title.trim();
+  const trimmedCategory = category.trim();
+  const trimmedPrice = price.trim();
+  const trimmedDescription = description.trim();
 
-        const readImageAsDataUrl =(file) =>{
-            return new Promise((resolve,reject) =>{
-                const reader = new FileReader();
-                reader.onloadend = ()=>{
-                    const imageUrl = reader.result
-                    localStorage.setItem(`image_${file.name}`, imageUrl)
-                    resolve(imageUrl)
-                }
-                reader.onerror = reject
-                reader.readAsDataURL(file)
-            })
-        }
+  if (!trimmedTitle || !trimmedCategory || !trimmedPrice || !trimmedDescription) {
+    toast.error("All fields are required");
+    return;
+  }
 
-        let imageUrl = '';
-        if(image){
-            try {
-                imageUrl = await readImageAsDataUrl(image)
-                
-            } catch (error) {
-                console.log(error)
-                alert('falied to read image');
-                return;
-                
-            }
-        }
+  if (isNaN(trimmedPrice) || Number(trimmedPrice) <= 0) {
+    toast.error("Price must be a valid number");
+    return;
+  }
 
-        const trimmedTitle = title.trim();
-        const trimmedCategory = category.trim();
-        const trimmedPrice = price.trim();
-        const trimmedDescription = description.trim();
-  
+  if (!image) {
+    toast.error("Please upload an image");
+    return;
+  }
 
-        if(!trimmedTitle || !trimmedCategory ||!trimmedPrice || !trimmedDescription  ){
-            alert('All fields are required');
-            setSubmitting(false)
-            return;
-        }
+  if (!image.type.startsWith("image/")) {
+    toast.error("Only image files allowed (JPG, PNG)");
+    return;
+  }
 
-        try {
+  if (image.size > 2 * 1024 * 1024) {
+    toast.error("Image must be less than 2MB");
+    return;
+  }
 
-            await addDoc(collection(fireStore, 'products'), {
-                title,
-                category,
-                price,
-                description,
-                imageUrl,
-                userId: auth.user.uid,
-                userName: auth.user.displayName || 'Anonymous',
-                createAt: new Date().toDateString(),
-            });
+  setSubmitting(true);
 
-            setImage(null);
-            const datas = await fetchFromFirestore();
-            setItems(datas)
-            toggleModalSell();
-            
-        } catch (error) {
-            console.log(error);
-            alert('failed to add items to the firestore')
-            
-        }finally{
-            setSubmitting(false)
-        }
+  const readImageAsDataUrl = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imageUrl = reader.result;
+        localStorage.setItem(`image_${file.name}`, imageUrl);
+        resolve(imageUrl);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
-        
+  let imageUrl = "";
 
-    }
+  try {
+    imageUrl = await readImageAsDataUrl(image);
+
+    await addDoc(collection(fireStore, "products"), {
+      title: trimmedTitle,
+      category: trimmedCategory,
+      price: Number(trimmedPrice),
+      description: trimmedDescription,
+      imageUrl,
+      userId: auth.user.uid,
+      userName: auth.user.displayName || "Anonymous",
+      createAt: new Date().toDateString(),
+    });
+
+    toast.success("Item listed successfully");
+
+    setTitle("");
+    setCategory("");
+    setPrice("");
+    setDescription("");
+    setImage(null);
+
+    const datas = await fetchFromFirestore();
+    setItems(datas);
+
+    toggleModalSell();
+
+  } catch (error) {
+    console.error(error);
+    toast.error("Failed to list item");
+  } finally {
+    setSubmitting(false);
+  }
+};
 
 
 

@@ -48,3 +48,18 @@ li{
         justify-content: space-between;
     }
 }
+@media (max-width: 768px) {
+  .location-search {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .main-search {
+    display: none;
+  }
+
+  .lang {
+    display: none;
+  }
+}

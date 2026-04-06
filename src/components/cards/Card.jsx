@@ -21,7 +21,6 @@ const Card = ({items}) => {
           className='relative w-full h-72 rounded-md border-solid bg-gray-50 overflow-hidden cursor-pointer'
           >
 
-            {/* Display Images */}
             <div  className='w-full flex justify-center p-2 overflow-hidden'>
               <img
               className='h-36 object-contain'
@@ -29,13 +28,11 @@ const Card = ({items}) => {
 
             </div>
 
-            {/* Display details */}
             <div  className='details p-1 pl-4 pr-4' >
             <h1 style={{ color: '#002f34' }} className="font-bold text-xl">₹ {item.price}</h1>
-            <p className="text-sm pt-2">{item.category}</p>
             <p className="pt-2">{item.title}</p>
+            <p className="text-sm pt-2">{item.category}</p>
 
-         {/* Fav Icon */}
 
          <div   className='absolute flex justify-center items-center p-2 bg-white rounded-full top-3 right-3 cursor-pointer'>
           <img className='w-5' src={Favorite} alt="" />
