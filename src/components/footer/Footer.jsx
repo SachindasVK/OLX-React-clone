@@ -42,31 +42,34 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-100 mt-20">
-      <div className="max-w-7xl mx-auto px-4 py-5 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4">
-        {footerDetails.map((section, index) => (
-          <div key={index} className="border-0 shadow-none bg-gray-100">
-            <div className="p-0">
-              <h3 className="font-extrabold text-sm m-3">
-                {section.title.toLocaleUpperCase()}
-              </h3>
 
-              <ul className="space-y-2 text-sm text-gray-500">
-                {section.items.map((item, i) => (
-                  <li
-                    key={i}
-                    className="cursor-pointer hover:text-foreground transition text-sm"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* TOP SECTION */}
+      <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+
+        {footerDetails.map((section, index) => (
+          <div key={index}>
+            <h3 className="font-bold text-sm mb-3">
+              {section.title.toUpperCase()}
+            </h3>
+
+            <ul className="space-y-2 text-sm text-gray-500">
+              {section.items.map((item, i) => (
+                <li
+                  key={i}
+                  className="cursor-pointer hover:text-black transition"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         ))}
-        <div >
-          <h3 className="font-extrabold text-sm mb-3">FOLLOW US</h3>
 
-          <div className="flex gap-3 mb-4">
+        {/* FOLLOW US */}
+        <div>
+          <h3 className="font-bold text-sm mb-3">FOLLOW US</h3>
+
+          <div className="flex gap-3 mb-4 flex-wrap">
             {[fb, insta, linkdin, x, ytube, whatsapp].map((icon, i) => (
               <img
                 key={i}
@@ -77,7 +80,7 @@ const Footer = () => {
             ))}
           </div>
 
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <img
               src={playstore}
               alt=""
@@ -90,27 +93,23 @@ const Footer = () => {
             />
           </div>
         </div>
+
       </div>
 
+      {/* BOTTOM SECTION */}
       <div className="bg-[#0a3d8f] py-6 px-4 sm:px-10 text-white text-xs">
-        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6 sm:gap-24 mb-4">
-          <img
-            src={cartrade_tech}
-            alt=""
-            className="h-6 sm:h-16 object-contain"
-          />
+
+        <div className="flex flex-wrap items-center justify-center sm:justify-start gap-6 sm:gap-16 mb-4">
+
+          <img src={cartrade_tech} alt="" className="h-6 sm:h-20" />
 
           <div className="hidden sm:block h-8 w-[1px] bg-white/40"></div>
 
-          <img src={Olxfooter} alt="" className="h-6 sm:h-16 object-contain" />
-          <img src={carwale} alt="" className="h-6 sm:h-16 object-contain" />
-          <img src={bikewale} alt="" className="h-6 sm:h-16 object-contain" />
-          <img src={cartrade} alt="" className="h-6 sm:h-16 object-contain" />
-          <img
-            src={mobilityfooter}
-            alt=""
-            className="h-6 sm:h-16 object-contain"
-          />
+          <img src={Olxfooter} alt="" className="h-6 sm:h-20" />
+          <img src={carwale} alt="" className="h-6 sm:h-20" />
+          <img src={bikewale} alt="" className="h-6 sm:h-20" />
+          <img src={cartrade} alt="" className="h-6 sm:h-20" />
+          <img src={mobilityfooter} alt="" className="h-6 sm:h-20" />
         </div>
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-center sm:text-left">
@@ -120,6 +119,7 @@ const Footer = () => {
             All rights reserved © 2006-2026 OLX
           </div>
         </div>
+
       </div>
     </footer>
   );
