@@ -1,18 +1,17 @@
-import React from "react";
-import mobilityfooter from "../../assets/mobilityfooter.svg";
-import carwale from "../../assets/carwale.svg";
-import Olxfooter from "../../assets/Olxfooter.svg";
-import cartrade from "../../assets/cartrade.svg";
-import cartrade_tech from "../../assets/cartrade_tech.svg";
-import bikewale from "../../assets/bikewale.svg";
-import appstore from "../../assets/social/appstore.webp";
-import playstore from "../../assets/social/playstore.webp";
-import fb from "../../assets/social/fb.svg";
-import insta from "../../assets/social/insta.svg";
-import linkdin from "../../assets/social/linkdin.svg";
-import whatsapp from "../../assets/social/whatsapp.svg";
-import x from "../../assets/social/x.svg";
-import ytube from "../../assets/social/ytube.svg";
+import mobilityfooter from "../assets/mobilityfooter.svg";
+import carwale from "../assets/carwale.svg";
+import Olxfooter from "../assets/Olxfooter.svg";
+import cartrade from "../assets/cartrade.svg";
+import cartrade_tech from "../assets/cartrade_tech.svg";
+import bikewale from "../assets/bikewale.svg";
+import appstore from "../assets/social/appstore.webp";
+import playstore from "../assets/social/playstore.webp";
+import fb from "../assets/social/fb.svg";
+import insta from "../assets/social/insta.svg";
+import linkdin from "../assets/social/linkdin.svg";
+import whatsapp from "../assets/social/whatsapp.svg";
+import x from "../assets/social/x.svg";
+import ytube from "../assets/social/ytube.svg";
 
 const Footer = () => {
   const footerDetails = [
@@ -41,18 +40,18 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-100 mt-20">
+    <footer className="bg-gray-100">
 
       {/* TOP SECTION */}
       <div className="max-w-7xl mx-auto px-4 py-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
 
         {footerDetails.map((section, index) => (
           <div key={index}>
-            <h3 className="font-bold text-sm mb-3">
+            <h3 className="font-extrabold text-sm mb-3">
               {section.title.toUpperCase()}
             </h3>
 
-            <ul className="space-y-2 text-sm text-gray-500">
+            <ul className="space-y-2 text-xs font-semibold text-gray-500">
               {section.items.map((item, i) => (
                 <li
                   key={i}
@@ -67,7 +66,7 @@ const Footer = () => {
 
         {/* FOLLOW US */}
         <div>
-          <h3 className="font-bold text-sm mb-3">FOLLOW US</h3>
+          <h3 className="font-extrabold text-sm mb-3">FOLLOW US</h3>
 
           <div className="flex gap-3 mb-4 flex-wrap">
             {[fb, insta, linkdin, x, ytube, whatsapp].map((icon, i) => (
